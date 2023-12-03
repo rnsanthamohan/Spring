@@ -4,18 +4,15 @@ import java.util.List;
 
 import com.example.exception.EmployeeNotfoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.entity.Employee;
 import com.example.service.EmployeeService;
 
 @RestController
 @RequestMapping(path = "/emp")
-@ControllerAdvice
 public class EmployeeController {
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @GetMapping("/employees")
     public List<Employee> getAllEmployees(){
@@ -35,14 +32,6 @@ public class EmployeeController {
     }
     @PutMapping("/employee")
     public void updateEmployee(@RequestBody Employee employee) throws EmployeeNotfoundException {
-        if (employee.getId() > 100) {
-            throw new EmployeeNotfoundException();
-        }
         employeeService.saveOrUpdate(employee);
-    }
-
-    @ExceptionHandler(value = EmployeeNotfoundException.class)
-    public ResponseEntity<Object> exception(EmployeeNotfoundException exception) {
-        return new ResponseEntity<>("Employee not found", HttpStatus.NOT_FOUND);
     }
 }

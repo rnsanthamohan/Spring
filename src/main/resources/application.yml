@@ -9,3 +9,7 @@ spring:
     generate-ddl: true
   h2:
     console.enabled: true
+management:
+  server:
+    port: 9001
+    address: 127.0.0.1
